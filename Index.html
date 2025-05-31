@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Raffle Entry Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    form {
+      margin-bottom: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="text"], input[type="email"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 95%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #entrants {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 5px;
+    }
+    #winner {
+      margin-top: 20px;
+      padding: 15px;
+      background: #d1ecf1;
+      border: 1px solid #bee5eb;
+      border-radius: 5px;
+      color: #0c5460;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎉 Raffle Entry 🎉</h1>
+  <p>Enter your name and email below to join the raffle!</p>
+
+  <form id="raffleForm">
+    <input type="text" id="name" placeholder="Your Name" required><br>
+    <input type="email" id="email" placeholder="Your Email" required><br>
+    <button type="submit">Enter Raffle</button>
+  </form>
+
+  <div id="entrants">
+    <h3>Entrants:</h3>
+    <ul id="entrantList"></ul>
+  </div>
+
+  <button onclick="pickWinner()">🎁 Pick a Winner</button>
+  <div id="winner"></div>
+
+  <script>
+    const entrantList = document.getElementById("entrantList");
+    const entrants = [];
+
+    document.getElementById("raffleForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      if (name && email) {
+        entrants.push({ name, email });
+        const li = document.createElement("li");
+        li.textContent = `${name} (${email})`;
+        entrantList.appendChild(li);
+        document.getElementById("raffleForm").reset();
+      }
+    });
+
+    function pickWinner() {
+      if (entrants.length === 0) {
+        alert("No entrants yet!");
+        return;
+      }
+      const winner = entrants[Math.floor(Math.random() * entrants.length)];
+      document.getElementById("winner").innerHTML = `<strong>🏆 Winner:</strong> ${winner.name} (${winner.email})`;
+    }
+  </script>
+
+</body>
+</html>
